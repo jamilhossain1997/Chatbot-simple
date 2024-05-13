@@ -11,6 +11,16 @@ $data = json_decode($postData, true);
 if (isset($data['text'])) {
     // Retrieve and sanitize the message
     $msg = mysqli_real_escape_string($con, $data['text']);
+    // $sql="select reply from chatbot_hints where question like % $msg % ";
+    $sql="SELECT reply FROM chatbot_hints WHERE question LIKE '%$msg%' LIMIT 0, 25";
+    $res=mysqli_query($con,$sql);
+ if(mysqli_num_rows($res)>0){
+
+     print_r($res);
+     exit;
+ }else{
+    echo "Sorry Not be able to understand you";
+ }
     
     // Process the message or perform database operations
     // For example, you can echo or return some response
