@@ -663,7 +663,7 @@ Bounce
     $(window).load(function () {
         $messages.mCustomScrollbar();
         setTimeout(function () {
-            fakeMessage();
+            // fakeMessage();
         }, 100);
     });
 
@@ -689,37 +689,20 @@ Bounce
             return false;
         }
 
-        console.log(msg);
-        $('<div class="message message-personal">' + msg + "</div>")
-            .appendTo($(".mCSB_container"))
-            .addClass("new");
-        setDate();
         $(".message-input").val(null);
-
+        $('<div class="message message-personal">' + msg + "</div>")
+                    .appendTo($(".mCSB_container"))
+                    .addClass("new");
+                setDate();
         $.ajax({
             url: 'get_botmessages_url.php',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ text: msg }),
             success: function (response) {
-                console.log('Data successfully sent:', response);
-
-
-                if ($(".message-input").val() != "") {
-                    return false;
-                }
-                $('<div class="message loading new"><figure class="avatar"><img src="http://algom.x10host.com/chat/img/icon-oracle.gif" /></figure><span></span></div>').appendTo($(".mCSB_container"));
-                updateScrollbar();
-
-                setTimeout(function () {
-                    $(".message.loading").remove();
-                    $('<div class="message new"><figure class="avatar"><img src="http://algom.x10host.com/chat/img/icon-oracle.gif" /></figure>' + response + "</div>")
-                        .appendTo($(".mCSB_container"))
-                        .addClass("new");
-                    setDate();
-                    updateScrollbar();
-                    i++;
-                }, 1000 + Math.random() * 20 * 100);
+                // console.log('Data successfully sent:', response);
+                fakeMessage(response)
+                
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);
@@ -727,15 +710,14 @@ Bounce
         });
 
 
-        updateScrollbar();
-        setTimeout(function () {
-            fakeMessage();
-        }, 1000 + Math.random() * 20 * 100);
+        // updateScrollbar();
+        // setTimeout(function () {
+        //     // fakeMessage();
+        // }, 1000 + Math.random() * 20 * 100);
     }
 
 
     $(".message-submit").click(function () {
-
         insertMessage();
     });
 
@@ -746,18 +728,32 @@ Bounce
         }
     });
 
-    var Fake = [
-        "Hi AlgoOracle at your service ",
-        'please enter the stock you\'d like to predict<input type="text" class="form-control oracle-search" name="query"  placeholder="Start typing something to search..."> ',
-        "Please Enter Your Target Price",
-        'good.....What is your comfortable level for investment loss (in %) <input type="range" value="50" min="0" max="100" step="10" />',
-        'we are Predicting... <div class="loading-img"><img src="http://algom.x10host.com/chat/img/chat.gif"  alt=""/></div>',
-        'great.. do you want to predict another? <button class="buttonx sound-on-click">Yes</button> <button class="buttony sound-on-click">No</button> ',
-        "Bye",
-        ":)",
-    ];
+    // var Fake = [
+    //     "Hi AlgoOracle at your service ",
+    //     'please enter the stock you\'d like to predict<input type="text" class="form-control oracle-search" name="query"  placeholder="Start typing something to search..."> ',
+    //     "Please Enter Your Target Price",
+    //     'good.....What is your comfortable level for investment loss (in %) <input type="range" value="50" min="0" max="100" step="10" />',
+    //     'we are Predicting... <div class="loading-img"><img src="http://algom.x10host.com/chat/img/chat.gif"  alt=""/></div>',
+    //     'great.. do you want to predict another? <button class="buttonx sound-on-click">Yes</button> <button class="buttony sound-on-click">No</button> ',
+    //     "Bye",
+    //     ":)",
+    // ];
 
-    function fakeMessage() {
+    function fakeMessage(response) {
+        // if ($(".message-input").val() != "") {
+        //     return false;
+        // }
+        $('<div class="message loading new"><figure class="avatar"><img src="http://algom.x10host.com/chat/img/icon-oracle.gif" /></figure><span></span></div>').appendTo($(".mCSB_container"));
+        // updateScrollbar();
 
+        setTimeout(function () {
+            $(".message.loading").remove();
+            $('<div class="message new"><figure class="avatar"><img src="http://algom.x10host.com/chat/img/icon-oracle.gif" /></figure>' + response + "</div>")
+                .appendTo($(".mCSB_container"))
+                .addClass("new");
+            setDate();
+            // updateScrollbar();
+            i++;
+        }, 1000 + Math.random() * 20 * 100);
     }
 </script>
